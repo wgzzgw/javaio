@@ -1,0 +1,19 @@
+package threadtest;
+public class Counter {  
+    public volatile static int count = 0;  
+    public synchronized  static void inc() {   
+        count++;  
+    }  
+    public static void main(String[] args)   {  
+    	Thread t=new Thread(new Runnable() {  
+            @Override  
+            public void run() {  
+                Counter.inc();  
+            }  
+        }); 
+        t.start();  
+        t.interrupt(); 
+        //这里每次运行的值都有可能不同,可能不为1000  
+        System.out.println("运行结果:Counter.count=" + Counter.count);  
+    }  
+}  

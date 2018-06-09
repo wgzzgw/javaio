@@ -1,0 +1,13 @@
+package threadpooltest;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class maintest {
+public static void main(String []args){
+	ExecutorService executorService=Executors.newCachedThreadPool();
+	//线程池 创建一个可缓存的线程池，如果当前线程池的规模超出了处理需求，将回收空的线程；当需求增加时，会增加线程数量；线程池规模无限制。
+	int cpuNums = Runtime.getRuntime().availableProcessors();  //获取当前系统的CPU 数目  
+	System.out.println("cpu数目"+cpuNums);
+}
+}

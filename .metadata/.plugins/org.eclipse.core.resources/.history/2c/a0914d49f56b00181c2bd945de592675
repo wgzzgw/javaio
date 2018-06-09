@@ -1,0 +1,68 @@
+package threadpooltest;
+
+import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+public class maintest {
+public static void main(String []args){
+/*	ExecutorService executorService=Executors.newCachedThreadPool();*/
+	//线程池 创建一个可缓存的线程池，如果当前线程池的规模超出了处理需求，将回收空的线程；当需求增加时，会增加线程数量；线程池规模无限制。
+	/*int cpuNums = Runtime.getRuntime().availableProcessors();  //获取当前系统的CPU 数目  
+	System.out.println("cpu数目"+cpuNums);
+	ExecutorService executorService2 =Executors.newFixedThreadPool(cpuNums); 
+	//ExecutorService通常根据系统资源情况灵活定义线程池大小
+*/
+	/*testCachedThreadPool();*/
+	/*testFixThreadPool();*/
+	/*testSingleThreadPool();*/
+	testScheduledThreadPool();
+}
+public static void testCachedThreadPool() {  
+    System.out.println("Main: Starting at: "+ new Date());    
+    ExecutorService exec = Executors.newCachedThreadPool();   //创建一个缓冲池，缓冲池容量大小为Integer.MAX_VALUE  
+    for(int i = 0; i < 10; i++) {     
+           exec.execute(new Task(String.valueOf(i)));     
+    }     
+    exec.shutdown();  //执行到此处并不会马上关闭线程池,但之后不能再往线程池中加线程，否则会报错  
+    System.out.println("Main: Finished all threads at"+ new Date());  
+}  
+public static void testFixThreadPool() {  
+    System.out.println("Main Thread: Starting at: "+ new Date());    
+     ExecutorService exec = Executors.newFixedThreadPool(5);     
+     for(int i = 0; i < 10; i++) {     
+            exec.execute(new Task(String.valueOf(i)));     
+     }     
+     exec.shutdown();  //执行到此处并不会马上关闭线程池  
+     System.out.println("Main Thread: Finished at:"+ new Date());  
+}  
+public static void testSingleThreadPool() {  
+    System.out.println("Main Thread: Starting at: "+ new Date());    
+    ExecutorService exec = Executors.newSingleThreadExecutor();   //创建大小为1的固定线程池  
+    for(int i = 0; i < 10; i++) {     
+           exec.execute(new Task(String.valueOf(i)));     
+    }     
+    exec.shutdown();  //执行到此处并不会马上关闭线程池  
+    System.out.println("Main Thread: Finished at:"+ new Date());  
+}  
+public static void testScheduledThreadPool() {  
+    System.out.println("Main Thread: Starting at: "+ new Date());    
+    ScheduledThreadPoolExecutor  exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(10);   //创建大小为10的线程池  
+     for(int i = 0; i < 10; i++) {     
+            /*exec.schedule(new Task(String.valueOf(i)), 10, TimeUnit.SECONDS);//延迟10秒执行  
+*/     //按指定频率周期执行某个任务
+         /*command：执行线程
+         initialDelay：初始化延时
+         period：两次开始执行最小间隔时间
+         unit：计时单位*/
+         exec.scheduleAtFixedRate(new Task(String.valueOf(i)), 5, 2, TimeUnit.SECONDS);
+    	 }     
+    /* exec.shutdown();  //执行到此处并不会马上关闭线程池
+     while(!exec.isTerminated()){  
+            //wait for all tasks to finish  
+     }  */
+     System.out.println("Main Thread: Finished at:"+ new Date());  
+}  
+}

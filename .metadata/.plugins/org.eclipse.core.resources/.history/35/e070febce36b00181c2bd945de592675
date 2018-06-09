@@ -1,0 +1,62 @@
+package threadtest;
+
+public class ResourceTest {
+	static SimpleResourceManager s=new SimpleResourceManager(3);//3台共享资源
+	  public static void main(String[] args)  {  
+		    	new Thread(new Runnable() {  
+		            @Override  
+		            public void run() {  
+		            	try {
+		            		System.out.println(s.getSynchronizer());
+							s.acquire();
+						} catch (InterruptedException e) {
+							// TODO 自动生成的 catch 块
+							e.printStackTrace();
+						}//要一台
+		            	System.out.println(s.getSynchronizer());
+		            }  
+		        }).start();
+		    	new Thread(new Runnable() {  
+		            @Override  
+		            public void run() {  
+		            	try {
+		            		System.out.println(s.getSynchronizer());
+							s.acquire();
+						} catch (InterruptedException e) {
+							// TODO 自动生成的 catch 块
+							e.printStackTrace();
+						}//要一台
+		            	System.out.println(s.getSynchronizer());
+		            }  
+		        }).start(); 
+		    	new Thread(new Runnable() {  
+		            @Override  
+		            public void run() {  
+		            	try {
+		            		System.out.println(s.getSynchronizer());
+							s.acquire();
+						} catch (InterruptedException e) {
+							// TODO 自动生成的 catch 块
+							e.printStackTrace();
+						}//要一台
+		            	System.out.println(s.getSynchronizer());
+		            }  
+		        }).start(); 
+		    	new Thread(new Runnable() {  
+		            @Override  
+		            public void run() {  
+		            	try {
+		            		System.out.println(s.getSynchronizer());
+							s.acquire();
+							s.release();//释放一台
+							s.release();//释放一台
+							s.release();//释放一台
+						} catch (InterruptedException e) {
+							// TODO 自动生成的 catch 块
+							e.printStackTrace();
+						}//要一台
+		            	System.out.println(s.getSynchronizer());
+		            }  
+		        }).start(); 
+	  }
+}
