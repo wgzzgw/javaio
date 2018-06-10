@@ -1,0 +1,69 @@
+package jacksontest;
+
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
+
+public class JacksonTester {
+	public static void main(String args[]) {
+		//第一步：创建ObjectMapper对象。它是一个可重复使用的对象。
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = "{\"name\":\"Mahesh\", \"age\":21}";
+
+		// map json to student
+		try {
+			// 将JSON格式的数据转为java对象并打印
+			//第二步：反序列化JSON到对象
+			//从JSON对象使用readValue()方法来获取。通过JSON字符串和对象类型作为参数JSON字符串/来源。
+			Student student = mapper.readValue(jsonString, Student.class);
+			System.out.println(student);
+			
+			//将对象转为JSON格式的数据并打印
+			//第三步：序列化对象到JSON
+			//使用writeValueAsString()方法来获取对象的JSON字符串表示。
+			/*mapper.enable(SerializationConfig.Feature.INDENT_OUTPUT);*/
+			jsonString = mapper.writeValueAsString(student);
+			System.out.println(jsonString);
+
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class Student {
+	private String name;
+	private int age;
+
+	public Student() {
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	// 重写对象打印语句
+	public String toString() {
+		// 非json格式的数据
+		return "Student [ name: " + name + ", age: " + age + " ]";
+	}
+}

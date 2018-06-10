@@ -1,0 +1,39 @@
+package jacksontest;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonEncoding;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonGenerator;
+
+public class JacksonTester5 {
+public static void main(String args[]) throws IOException{
+	 JacksonTester5 tester = new JacksonTester5();
+	JsonFactory jsonFactory=new JsonFactory();
+	//写入数据类 JsonGenerator
+	JsonGenerator jsonGenerator=
+	jsonFactory.createJsonGenerator(new File(
+			   "student6.json"), JsonEncoding.UTF8);
+	jsonGenerator.writeStartObject();//此代码规定在写前敲入
+	// "name" : "Mahesh Kumar"
+	jsonGenerator.writeStringField("name", "Mahesh Kumar");
+	 // "age" : 21
+    jsonGenerator.writeNumberField("age", 21);
+    // "verified" : false
+    jsonGenerator.writeBooleanField("verified", false); 
+    // "marks" : [100, 90, 85]
+    jsonGenerator.writeFieldName("marks"); 
+    // [
+    jsonGenerator.writeStartArray(); 
+    // 100, 90, 85
+    jsonGenerator.writeNumber(100); 
+    jsonGenerator.writeNumber(90); 
+    jsonGenerator.writeNumber(85); 
+    // ]
+    jsonGenerator.writeEndArray(); 
+    // }
+    jsonGenerator.writeEndObject(); 
+	jsonGenerator.close();//结束 不要忘记
+}
+}
