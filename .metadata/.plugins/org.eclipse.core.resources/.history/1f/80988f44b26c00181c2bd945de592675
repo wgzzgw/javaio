@@ -1,0 +1,34 @@
+package domtest;
+//1.导入XML相关的软件包
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.*;
+
+import java.io.*;
+//使用DOM解析器解析XML文档
+public class dommain {
+public static void main(String args[]) throws ParserConfigurationException, SAXException, IOException{
+	//2.创建 DocumentBuilder
+	DocumentBuilder documentBuilder=DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	//3.从文件或流创建一个文档
+	StringBuilder xmlStringBuilder = new StringBuilder();
+	xmlStringBuilder.append("<?xml version=\"1.0\"?> <class name=\"po\">"
+			+ "<div name=\"hello\">hhhhhh发生的</div>"
+			+ " </class>");
+	//字节数组输入流
+	ByteArrayInputStream input =  new ByteArrayInputStream(
+			   xmlStringBuilder.toString().getBytes("UTF-8"));
+			Document doc = documentBuilder.parse(input);//得到文档
+	//4.提取根元素
+			Element root=doc.getDocumentElement();
+			//5.检查属性
+			//returns specific attribute
+			System.out.println(root.getAttribute("name")); 
+			//returns a Map (table) of names/values
+			System.out.println(root.getAttributes()); 
+			System.out.println(root.getTextContent());
+			System.out.println(root.getChildNodes());
+			
+}
+}
